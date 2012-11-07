@@ -39,7 +39,7 @@ server {
 
   keepalive_timeout 5;
 
-  <% unless mediaroot.empty? %>
+  <% unless mediaroot.empty? or mediaprefix.empty? %>
   location = /favicon.ico {
     alias <%= absolute_mediaroot %>/favicon.ico;
     access_log off;
@@ -49,6 +49,13 @@ server {
     alias <%= absolute_mediaroot %>;
     expires max;
     access_log off;
+  }
+  <% end %>
+
+  <% unless mediaprotectedprefix.empty? %>
+  location <%= mediaprotectedprefix %> {
+    internal;
+    alias <%= absolute_mediaroot %>;
   }
   <% end %>
 
